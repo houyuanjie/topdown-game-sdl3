@@ -12,4 +12,6 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result)
     state->window = NULL;
 
     SDL_QuitSubSystem(SDL_INIT_VIDEO);
+
+    SDL_free(state);
 }
