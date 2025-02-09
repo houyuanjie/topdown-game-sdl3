@@ -6,18 +6,13 @@ require 'rake/clean'
 SOURCES_DIR = 'src'
 TARGET_DIR = 'out'
 
-SOURCES_LIST = FileList.new(
-  "#{SOURCES_DIR}/**/*.h",
-  "#{SOURCES_DIR}/**/*.c"
-)
+SOURCES_LIST = FileList.new("#{SOURCES_DIR}/**/*")
+C_SOURCES_LIST = FileList.new("#{SOURCES_DIR}/**/*.c")
+
+EXECUTABLE = "#{TARGET_DIR}/game.exe"
 
 # 编译器标志
 CFLAGS = "-I#{SOURCES_DIR} -Wall -Wextra -pedantic"
-
-MAIN = "#{SOURCES_DIR}/main.c"
-ADDITIONAL = FileList.new("#{SOURCES_DIR}/**/*.c").exclude(MAIN)
-
-EXECUTABLE = "#{TARGET_DIR}/game.exe"
 
 # 外部库依赖
 INCLUDE_LIBRARIES = %w[SDL3 SDL3-image SDL3-ttf].freeze
@@ -31,7 +26,7 @@ CLEAN.include("#{TARGET_DIR}/*")
 # 可执行文件生成规则
 file EXECUTABLE => SOURCES_LIST do
   mkdir_p TARGET_DIR
-  sh "gcc -g #{CFLAGS} #{INCLUDE_CFLAGS} #{MAIN} #{ADDITIONAL} -o #{EXECUTABLE} #{INCLUDE_LDFLAGS}"
+  sh "gcc -g #{CFLAGS} #{INCLUDE_CFLAGS} #{C_SOURCES_LIST} -o #{EXECUTABLE} #{INCLUDE_LDFLAGS}"
 end
 
 desc "生成可执行文件 #{EXECUTABLE}"

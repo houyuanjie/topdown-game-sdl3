@@ -14,4 +14,34 @@ typedef struct Entity
     void (*destroy)(void);
 } Entity;
 
+extern Entity entities[MAX_ENTITIES];
+extern int entities_size;
+
+#define ENTITIES_REGISTER(entity)     \
+    entities[entities_size] = entity; \
+    entities_size++;
+
+#define ENTITIES_HANDLE_EVENT_ALL(event)    \
+    for (int i = 0; i < entities_size; i++) \
+    {                                       \
+        entities[i].handle_event(event);    \
+    }
+
+#define ENTITIES_UPDATE_ALL(delta_time)     \
+    for (int i = 0; i < entities_size; i++) \
+    {                                       \
+        entities[i].update(delta_time);     \
+    }
+
+#define ENTITIES_RENDER_ALL(renderer)       \
+    for (int i = 0; i < entities_size; i++) \
+    {                                       \
+        entities[i].render(renderer);       \
+    }
+
+#define ENTITIES_DESTROY_ALL()              \
+    for (int i = 0; i < entities_size; i++) \
+    {                                       \
+        entities[i].destroy();              \
+    }
 #endif
