@@ -44,4 +44,5 @@ extern int entities_size;
     {                                       \
         entities[i].destroy();              \
     }
+
 #endif
